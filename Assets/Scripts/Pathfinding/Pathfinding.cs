@@ -49,7 +49,7 @@ public class Pathfinding : MonoBehaviour {
 				
 				if (currentNode == targetNode) {
 					sw.Stop();
-					print ("Path found: " + sw.ElapsedMilliseconds + " ms");
+					//print ("Path found: " + sw.ElapsedMilliseconds + " ms");
 					pathSuccess = true;
 					break;
 				}
@@ -82,7 +82,6 @@ public class Pathfinding : MonoBehaviour {
 		
 	}
 
-	
 	int TurningCost(Node from, Node to) {
 		/*
 		Vector2 dirOld = new Vector2(from.gridX - from.parent.gridX, from.gridY - from.parent.gridY);
@@ -137,5 +136,11 @@ public class Pathfinding : MonoBehaviour {
 		return 14*dstX + 10 * (dstY-dstX);
 	}
 	
+	public static float GetNodeRadius()
+    {
+
+		return instance.grid.nodeRadius;
+
+    }
 	
 }

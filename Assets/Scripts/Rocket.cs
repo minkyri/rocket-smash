@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Rocket : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Rocket : MonoBehaviour
     private float health = 100;
 
     [SerializeField]
-    private float rocketForce = 3;
+    protected float rocketForce = 3;
 
     [SerializeField]
     private float explosionForce = 10;
@@ -20,28 +21,28 @@ public class Rocket : MonoBehaviour
     [SerializeField]
     private GameObject explosionPrefab;
 
-    protected ParticleSystem boosterPs;
+    [SerializeField]
+    protected float rotateSpeed = 20f;
+
     protected Explodable explodable;
     protected Rigidbody2D rb;
 
     private float minimumDamageThreshold = 1f;
     private ParticleSystem.EmissionModule em;
-    private ParticleSystem.MinMaxCurve emissionOverDistance;
 
     private void Awake()
     {
         
         rb = GetComponent<Rigidbody2D>();
-        boosterPs = GetComponent<ParticleSystem>();
+        em = GetComponent<ParticleSystem>().emission;
         explodable = GetComponent<Explodable>();
 
     }
 
     private void Start()
     {
-
-        em = boosterPs.emission;
-        emissionOverDistance = em.rateOverDistance;
+        
+        em.enabled = true;
 
     }
 
@@ -66,10 +67,25 @@ public class Rocket : MonoBehaviour
         Vector3 myIncidentVelocity = (Vector3)rb.velocity - impulse / rb.mass;
 
         Vector3 otherIncidentVelocity = Vector3.zero;
-        var otherBody = collision.rigidbody;
+        Rigidbody2D otherBody = collision.rigidbody;
+
         if (otherBody != null)
         {
-            otherIncidentVelocity = otherBody.velocity;
+
+            NavMeshAgent agent = collision.gameObject.GetComponent<NavMeshAgent>();
+            if(agent != null)
+            {
+
+                otherIncidentVelocity = agent.velocity;
+
+            }
+            else
+            {
+
+                otherIncidentVelocity = otherBody.velocity;
+
+            }
+
             if (!otherBody.isKinematic)
                 otherIncidentVelocity += impulse / otherBody.mass;
         }
@@ -90,7 +106,9 @@ public class Rocket : MonoBehaviour
         GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
         ParticleSystem ps = explosion.GetComponentInChildren<ParticleSystem>();
         ParticleSystem.EmissionModule em = ps.emission;
-        ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 1.8f, explosionForce * 2.8f);
+        ParticleSystem.MainModule mm = ps.main;
+        mm.startSpeed = new ParticleSystem.MinMaxCurve(explosionForce/4, explosionForce/2);
+        ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 0.3f, explosionForce * 0.5f);
         ParticleSystem.Burst burst = new ParticleSystem.Burst(0, count);
         em.SetBurst(0, burst);
         ps.Play();
@@ -126,7 +144,7 @@ public class Rocket : MonoBehaviour
     }
     protected void PlayEmission()
     {
-
+      
         em.rateOverDistance = rocketForce * 2;
 
     }

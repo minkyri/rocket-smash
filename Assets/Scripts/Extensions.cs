@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public static class Extensions
 {
     public static Vector2 ComputeTotalImpulse(Collision2D collision)
@@ -117,6 +117,29 @@ public static class Extensions
         }
 
         return bounds.ClosestPoint(position);
+    }
+
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitCircle * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
+
+    public static bool CheckIfPathPossible(NavMeshAgent agent, Vector2 targetPosition)
+    {
+
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(targetPosition, path);
+
+        return path.status == NavMeshPathStatus.PathPartial;
+
     }
 
 }

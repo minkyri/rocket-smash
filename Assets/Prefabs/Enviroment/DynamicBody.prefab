@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9014366643261897498}
   - component: {fileID: 6033093980230203414}
   - component: {fileID: 1346979595526458921}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DynamicBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 0ca8a970904e2e7469ff50ec1ee10995, type: 2}

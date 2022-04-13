@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelController : MonoBehaviour
 {
 
-    [SerializeField]
-    private GameObject wallPrefab;
+
+    
 
     public float horizontalSize = 18;
     public float verticalSize = 8;
     [SerializeField] private float thickness = 0.75f;
+    [SerializeField] private NavMeshSurface surface2d;
+    [SerializeField] private GameObject gameFloorPrefab;
+    [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject dynamicObjectPrefab;
     [SerializeField] private GameObject staticObjectPrefab;
     [SerializeField] private GameObject kinematicObjectPrefab;
@@ -36,8 +40,12 @@ public class LevelController : MonoBehaviour
         }
 
         GenerateWalls();
-        //SpawnObjects();
-        //SpawnRockets();
+        SpawnObjects();
+
+        //surface2d.BuildNavMeshAsync();
+        surface2d.BuildNavMesh();
+
+        SpawnRockets();
 
     }
 
@@ -55,6 +63,9 @@ public class LevelController : MonoBehaviour
         rightWall.localScale = new Vector3(thickness, verticalSize + thickness);
         leftWall.localScale = new Vector3(thickness, verticalSize + thickness);
 
+        Transform floor = Instantiate(gameFloorPrefab, Vector3.zero, Quaternion.identity, transform).transform;
+        floor.localScale = new Vector3(horizontalSize, verticalSize);
+
     }
     private void SpawnObjects()
     {
@@ -68,11 +79,16 @@ public class LevelController : MonoBehaviour
         GameObject[] rockets = new GameObject[]
         {
 
-            Instantiate(playerPrefab, new Vector3(0, 0), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(10, 0), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(-11, 3), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(2, -8), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(7, 6), Quaternion.identity, transform)
+            Instantiate(playerPrefab, new Vector3(-25, 0), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(24.57f, 3.87f), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(-25.96f, -4.37f), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(7.95f, 2.77f), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(0f, 0f), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(-6.34f, 2.34f), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(4.11000013f,4.88999987f,0), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(2.08999991f,-6.25f,0), Quaternion.identity, transform),
+            Instantiate(enemyPrefab, new Vector3(23.6599998f,-6.71000004f,0), Quaternion.identity, transform)
+
 
         };
 
@@ -88,6 +104,14 @@ public class LevelController : MonoBehaviour
             
 
         }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        Gizmos.color = new Color(1, 0, 0, 1f);
+        Gizmos.DrawWireCube(transform.position, new Vector3(horizontalSize, verticalSize, 1));
 
     }
 
