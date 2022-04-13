@@ -119,7 +119,7 @@ public static class Extensions
         return bounds.ClosestPoint(position);
     }
 
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    public static Vector3 RandomNavCircle(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = Random.insideUnitCircle * dist;
 

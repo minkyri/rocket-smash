@@ -21,7 +21,7 @@ public class EnemyController : Rocket
     NavMeshAgent agent;
 
     Vector3 lastVelocity;
-    Vector3 acceleration;
+    Vector3 accelerationDir;
 
     private void Start()
     {
@@ -30,10 +30,11 @@ public class EnemyController : Rocket
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.updatePosition = false;
+        agent.angularSpeed = rotateSpeed * 10;
 
         lastVelocity = Vector3.zero;
 
-        timer = wanderTimer;
+        timer = 0;
 
         PlayEmission();
 
@@ -66,17 +67,17 @@ public class EnemyController : Rocket
         {
 
             agent.acceleration = rocketForce / 6;
-            agent.SetDestination(Extensions.RandomNavSphere(transform.position, wanderRadius, 7));
-            timer = wanderTimer;
+
+            agent.SetDestination(Extensions.RandomNavCircle(transform.position, wanderRadius, ~0));
+            timer = wanderTimer * Random.Range(0.8f, 1.2f); ;
 
         }
 
         rb.MovePosition(agent.nextPosition);
 
-
-        acceleration = (agent.velocity - lastVelocity) / Time.deltaTime;
-
-        float angle = Mathf.Atan2(acceleration.y, acceleration.x) * Mathf.Rad2Deg;
+        accelerationDir = (agent.steeringTarget - transform.position) / Mathf.Pow(Time.deltaTime, 2);
+        //accelerationDir = (agent.velocity - lastVelocity) / Time.deltaTime;
+        float angle = Mathf.Atan2(accelerationDir.y, accelerationDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, angle), Time.fixedDeltaTime * rotateSpeed);
 
         lastVelocity = agent.velocity;

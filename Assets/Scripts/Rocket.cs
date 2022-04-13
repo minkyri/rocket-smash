@@ -53,10 +53,10 @@ public class Rocket : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (!collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || collision.gameObject.layer != 7) return;
+        if (!collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || collision.gameObject.layer != 7 || collision.gameObject.tag == "Enemy") return;
 
         Vector3 normal = collision.GetContact(0).normal;
         Vector3 impulse = Extensions.ComputeTotalImpulse(collision);

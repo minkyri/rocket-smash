@@ -8,9 +8,14 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0, 0, -10);
     [SerializeField] private float overshootDistance = 1f;
     [SerializeField] private float followSpeed = 5;
-    [SerializeField] private Transform target;
+    [SerializeField] private float deathPanDampening = 2f; 
+    private Transform target;
 
     private LevelController levelController;
+    private Rigidbody2D targetRb;
+    private Vector2 lastTargetVelocity;
+
+    private bool deathPanning = false;
 
     float minX;
     float maxX;
@@ -27,64 +32,98 @@ public class CameraFollow : MonoBehaviour
     private void Update()
     {
 
-        try
+        if (target == null)
         {
 
-            target = GameObject.FindGameObjectWithTag("Player").transform;
+            if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
 
-        }
-        catch (System.NullReferenceException)
-        {
+                target = GameObject.FindGameObjectWithTag("Player").transform;
+                gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb);
+                if(rb != null)Destroy(rb);
 
-            return;
+                target.gameObject.TryGetComponent(out targetRb);
 
-        }
+                deathPanning = false;
 
-        float vertExtent = Camera.main.orthographicSize;
-        float horzExtent = vertExtent * Screen.width / Screen.height;
+            }
+            else if(!deathPanning)
+            {
 
-        //Debug.Log("V: " + vertExtent.ToString() + "     H: " + horzExtent.ToString());
+                deathPanning = true;
 
-        if (horzExtent > levelController.horizontalSize / 2.0f)
-        {
+                Rigidbody2D rb = gameObject.AddComponent<Rigidbody2D>();
+                rb.gravityScale = 0;
+                rb.drag = deathPanDampening;
+                rb.freezeRotation = true;
+                rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+                rb.velocity = lastTargetVelocity;
 
-            minX = 0;
-            maxX = 0;
-
-        }
-        else
-        {
-
-            minX = (horzExtent - levelController.horizontalSize / 2.0f) - overshootDistance;
-            maxX = (levelController.horizontalSize / 2.0f - horzExtent) + overshootDistance;
-
-        }
-        if (vertExtent > levelController.verticalSize / 2.0f)
-        {
-
-            minY = 0;
-            maxY = 0;
-
-        }
-        else
-        {
-
-            minY = (vertExtent - levelController.verticalSize / 2.0f) - overshootDistance;
-            maxY = (levelController.verticalSize / 2.0f - vertExtent) + overshootDistance;
+            }
 
         }
 
-        Vector3 targetPosition = new Vector3(
+        if(target != null)
+        {
 
-            Mathf.Clamp(target.position.x, minX, maxX),
-            Mathf.Clamp(target.position.y, minY, maxY)
+            float vertExtent = Camera.main.orthographicSize;
+            float horzExtent = vertExtent * Screen.width / Screen.height;
+
+            //Debug.Log("V: " + vertExtent.ToString() + "     H: " + horzExtent.ToString());
+
+            if (horzExtent > levelController.horizontalSize / 2.0f)
+            {
+
+                minX = 0;
+                maxX = 0;
+
+            }
+            else
+            {
+
+                minX = (horzExtent - levelController.horizontalSize / 2.0f) - overshootDistance;
+                maxX = (levelController.horizontalSize / 2.0f - horzExtent) + overshootDistance;
+
+            }
+            if (vertExtent > levelController.verticalSize / 2.0f)
+            {
+
+                minY = 0;
+                maxY = 0;
+
+            }
+            else
+            {
+
+                minY = (vertExtent - levelController.verticalSize / 2.0f) - overshootDistance;
+                maxY = (levelController.verticalSize / 2.0f - vertExtent) + overshootDistance;
+
+            }
+
+            Vector3 targetPosition = new Vector3(
+
+                Mathf.Clamp(target.position.x, minX, maxX),
+                Mathf.Clamp(target.position.y, minY, maxY)
 
 
-        ) + offset;
+            ) + offset;
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
+            if (targetRb != null)
+            {
 
-        //transform.position = Vector3.Lerp(transform.position, target.position + offset, Time.deltaTime * followSpeed);
+                lastTargetVelocity = targetRb.velocity;
+
+            }
+            else
+            {
+
+                lastTargetVelocity = Vector3.zero;
+
+            }
+            //transform.position = Vector3.Lerp(transform.position, target.position + offset, Time.deltaTime * followSpeed);
+
+        }
 
     }
 

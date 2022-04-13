@@ -40,12 +40,24 @@ public class LevelController : MonoBehaviour
         }
 
         GenerateWalls();
-        SpawnObjects();
+        GameObject level = GameObject.FindGameObjectWithTag("Level");
 
-        //surface2d.BuildNavMeshAsync();
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform tr in level.transform) children.Add(tr.gameObject);
+
+        foreach (GameObject child in children)
+        {
+
+            if (child.TryGetComponent<Explodable>(out Explodable sc))
+            {
+
+                sc.fragmentInEditor();
+
+            }
+
+        }
+
         surface2d.BuildNavMesh();
-
-        SpawnRockets();
 
     }
 
@@ -67,46 +79,6 @@ public class LevelController : MonoBehaviour
         floor.localScale = new Vector3(horizontalSize, verticalSize);
 
     }
-    private void SpawnObjects()
-    {
-
-        
-
-    }
-    private void SpawnRockets()
-    {
-
-        GameObject[] rockets = new GameObject[]
-        {
-
-            Instantiate(playerPrefab, new Vector3(-25, 0), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(24.57f, 3.87f), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(-25.96f, -4.37f), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(7.95f, 2.77f), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(0f, 0f), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(-6.34f, 2.34f), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(4.11000013f,4.88999987f,0), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(2.08999991f,-6.25f,0), Quaternion.identity, transform),
-            Instantiate(enemyPrefab, new Vector3(23.6599998f,-6.71000004f,0), Quaternion.identity, transform)
-
-
-        };
-
-        foreach(GameObject rocket in rockets)
-        {
-
-            if(rocket.TryGetComponent<Explodable>(out Explodable sc))
-            {
-
-                sc.fragmentInEditor();
-
-            }
-            
-
-        }
-
-    }
-
     private void OnDrawGizmos()
     {
 

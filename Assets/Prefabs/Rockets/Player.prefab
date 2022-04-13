@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   rocketForce: 5
-  explosionForce: 10
-  explosionRadius: 2
+  explosionForce: 50
+  explosionRadius: 50
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rotateSpeed: 20
 --- !u!114 &2148210427030346085
@@ -166,7 +166,7 @@ Rigidbody2D:
   m_UseAutoMass: 1
   m_Mass: 0.20999998
   m_LinearDrag: 1
-  m_AngularDrag: 0
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 2
