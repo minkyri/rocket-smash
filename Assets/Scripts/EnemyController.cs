@@ -23,8 +23,10 @@ public class EnemyController : Rocket
     Vector3 lastVelocity;
     Vector3 accelerationDir;
 
-    private void Start()
+    protected override void Start()
     {
+
+        base.Start();   
 
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;

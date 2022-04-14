@@ -29,20 +29,23 @@ public class Rocket : MonoBehaviour
 
     private float minimumDamageThreshold = 1f;
     private ParticleSystem.EmissionModule em;
+    private ParticleSystem.MainModule mainModule;   
 
     private void Awake()
     {
         
         rb = GetComponent<Rigidbody2D>();
         em = GetComponent<ParticleSystem>().emission;
+        mainModule = GetComponent<ParticleSystem>().main;
         explodable = GetComponent<Explodable>();
 
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         
         em.enabled = true;
+        mainModule.startSize = new ParticleSystem.MinMaxCurve((0.1f / 0.35f) * transform.localScale.y, (0.3f / 0.35f) * transform.localScale.y);
 
     }
 
@@ -56,7 +59,7 @@ public class Rocket : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (!collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || collision.gameObject.layer != 7 || collision.gameObject.tag == "Enemy") return;
+        if (!collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || collision.gameObject.layer != 7) return;
 
         Vector3 normal = collision.GetContact(0).normal;
         Vector3 impulse = Extensions.ComputeTotalImpulse(collision);
@@ -69,26 +72,22 @@ public class Rocket : MonoBehaviour
         Vector3 otherIncidentVelocity = Vector3.zero;
         Rigidbody2D otherBody = collision.rigidbody;
 
-        if (otherBody != null)
+        NavMeshAgent agent = collision.gameObject.GetComponent<NavMeshAgent>();
+        if(agent != null)
         {
 
-            NavMeshAgent agent = collision.gameObject.GetComponent<NavMeshAgent>();
-            if(agent != null)
-            {
+            otherIncidentVelocity = agent.velocity;
 
-                otherIncidentVelocity = agent.velocity;
-
-            }
-            else
-            {
-
-                otherIncidentVelocity = otherBody.velocity;
-
-            }
-
-            if (!otherBody.isKinematic)
-                otherIncidentVelocity += impulse / otherBody.mass;
         }
+        else
+        {
+
+            otherIncidentVelocity = otherBody.velocity;
+
+        }
+
+        if (!otherBody.isKinematic)
+            otherIncidentVelocity += impulse / otherBody.mass;
 
         float myApproach = Mathf.Max(0f, Vector3.Dot(myIncidentVelocity, normal));
         float otherApproach = Mathf.Max(0f, Vector3.Dot(otherIncidentVelocity, normal));
@@ -108,7 +107,8 @@ public class Rocket : MonoBehaviour
         ParticleSystem.EmissionModule em = ps.emission;
         ParticleSystem.MainModule mm = ps.main;
         mm.startSpeed = new ParticleSystem.MinMaxCurve(explosionForce/4, explosionForce/2);
-        ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 0.3f, explosionForce * 0.5f);
+        mm.startSize = new ParticleSystem.MinMaxCurve((0.08f/0.21f) * transform.localScale.y * transform.localScale.x, (0.2f / 0.21f) * transform.localScale.y * transform.localScale.x);
+        ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 0.5f, explosionForce * 0.8f);
         ParticleSystem.Burst burst = new ParticleSystem.Burst(0, count);
         em.SetBurst(0, burst);
         ps.Play();
