@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5818000670686159954}
   - component: {fileID: 6742759998815457352}
   - component: {fileID: -5959863742843820961}
-  - component: {fileID: -3155379440842020727}
   - component: {fileID: 6742759998815457354}
   - component: {fileID: 5818000670686159952}
   - component: {fileID: 5818000670686159955}
@@ -101,37 +100,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2adf3ed6529117e4bb353da21dec252f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  rocketForce: 5
+  health: 5
+  rocketForce: 6
   explosionForce: 10
   explosionRadius: 2
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rotateSpeed: 10
-  awareRadius: 10
+  awareRadius: 43.65
   wanderRadius: 2
-  wanderTimer: 1
---- !u!195 &-3155379440842020727
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5818000670686159916}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 10.9
-  m_Acceleration: 10.72
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 0.99999994
-  m_BaseOffset: 0.49999997
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  wanderTimer: 0.5
 --- !u!114 &6742759998815457354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +138,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 5818000670686159916}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 0ca8a970904e2e7469ff50ec1ee10995, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -186,19 +163,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5818000670686159916}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 1
+  m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
   m_Mass: 0.20999998
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0ca8a970904e2e7469ff50ec1ee10995, type: 2}
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!199 &6742759998815457359
 ParticleSystemRenderer:
   serializedVersion: 6

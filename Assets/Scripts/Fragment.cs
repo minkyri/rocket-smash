@@ -12,21 +12,22 @@ public class Fragment : MonoBehaviour
 
     private void Awake()
     {
-
-        gameObject.layer = 8;
+       
         rb = GetComponent<Rigidbody2D>();
         mr = GetComponent<MeshRenderer>();
+
+    }
+    private void Start()
+    {
+
+        gameObject.layer = 8;
+
         rb.useAutoMass = true;
         rb.gravityScale = 0;
         rb.angularDrag = 0;
         rb.drag = 1;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
-
-
-    }
-    private void Start()
-    {
 
         timer = timeToFade;
 

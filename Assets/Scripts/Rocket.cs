@@ -7,7 +7,8 @@ public class Rocket : MonoBehaviour
 {
 
     [SerializeField]
-    private float health = 100;
+    protected float health = 100;
+    private float maxHealth;
 
     [SerializeField]
     protected float rocketForce = 3;
@@ -46,20 +47,20 @@ public class Rocket : MonoBehaviour
         
         em.enabled = true;
         mainModule.startSize = new ParticleSystem.MinMaxCurve((0.1f / 0.35f) * transform.localScale.y, (0.3f / 0.35f) * transform.localScale.y);
-
-    }
-
-    protected void Boost()
-    {
-
-        rb.AddForce(transform.right * rocketForce);
+        maxHealth = health;
 
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (!collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || collision.gameObject.layer != 7) return;
+        if (
+
+            !collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) || 
+            collision.gameObject.layer == 8 ||
+            (gameObject.tag == "Enemy" && collision.gameObject.tag == "Enemy")
+
+        ) return;
 
         Vector3 normal = collision.GetContact(0).normal;
         Vector3 impulse = Extensions.ComputeTotalImpulse(collision);
@@ -70,34 +71,36 @@ public class Rocket : MonoBehaviour
         Vector3 myIncidentVelocity = (Vector3)rb.velocity - impulse / rb.mass;
 
         Vector3 otherIncidentVelocity = Vector3.zero;
-        Rigidbody2D otherBody = collision.rigidbody;
-
-        NavMeshAgent agent = collision.gameObject.GetComponent<NavMeshAgent>();
-        if(agent != null)
+        var otherBody = collision.rigidbody;
+        if (otherBody != null)
         {
-
-            otherIncidentVelocity = agent.velocity;
-
-        }
-        else
-        {
-
             otherIncidentVelocity = otherBody.velocity;
-
+            if (!otherBody.isKinematic)
+                otherIncidentVelocity += impulse / otherBody.mass;
         }
 
-        if (!otherBody.isKinematic)
-            otherIncidentVelocity += impulse / otherBody.mass;
-
+        // Compute how fast each one was moving along the collision normal,
+        // Or zero if we were moving against the normal.
         float myApproach = Mathf.Max(0f, Vector3.Dot(myIncidentVelocity, normal));
         float otherApproach = Mathf.Max(0f, Vector3.Dot(otherIncidentVelocity, normal));
 
-        float damage = Mathf.Max(0f, otherApproach - myApproach - minimumDamageThreshold);
+        float myMomentum = Mathf.Abs(Vector3.Dot(myIncidentVelocity, normal)) * rb.mass;
+        float otherMomenum = Mathf.Abs(Vector3.Dot(otherIncidentVelocity, normal)) * otherBody.mass;
 
-        TakeDamage(damage);
+        //print(gameObject.name + " momenum = " + myMomentum);
+        //print(gameObject.name + " other momenum = " + otherMomenum);
+
+        if (myMomentum < otherMomenum)
+        {
+
+            float damage = Mathf.Max(0f, otherApproach - myApproach - minimumDamageThreshold);
+
+            TakeDamage(damage);
+
+        }
 
     }
-    protected void Death()
+    protected virtual void Death()
     {
 
         explodable.explode();
@@ -154,5 +157,8 @@ public class Rocket : MonoBehaviour
         em.rateOverDistance = 0;
 
     }
+
+    public float GetHealth() { return health; }
+    public float GetMaxHealth() { return maxHealth; }
 
 }

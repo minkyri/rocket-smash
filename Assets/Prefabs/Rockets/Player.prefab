@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30910a9840a6c9548bda121320058f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 20
   rocketForce: 5
   explosionForce: 50
   explosionRadius: 50
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1216344316101750019}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 0ca8a970904e2e7469ff50ec1ee10995, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -168,11 +168,11 @@ Rigidbody2D:
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0ca8a970904e2e7469ff50ec1ee10995, type: 2}
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!199 &2148210427030346080
 ParticleSystemRenderer:
   serializedVersion: 6

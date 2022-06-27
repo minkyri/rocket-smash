@@ -6,35 +6,27 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 
-    private bool paused = false;
+    public static GameController instance;
 
-    private void Update()
+    [HideInInspector] public LevelController levelController;
+    
+
+    private void Awake()
     {
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (instance == null)
         {
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
+            instance = this;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else
         {
-
-            if (!paused)
-            {
-
-                Time.timeScale = 0;
-                paused = true;
-
-            }
-            else{ 
-
-                Time.timeScale = 1;
-                paused = false;
-
-            }
-
+            Destroy(gameObject);
+            return;
         }
+
+        //DontDestroyOnLoad(gameObject);
+
+        levelController = GetComponent<LevelController>();
 
     }
 

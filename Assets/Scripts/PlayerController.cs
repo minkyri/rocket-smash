@@ -6,8 +6,6 @@ using UnityEngine.AI;
 public class PlayerController : Rocket
 {
 
-    private Vector2 mouseDir;
-
     private void FixedUpdate()
     {
 
@@ -21,7 +19,7 @@ public class PlayerController : Rocket
         if (Input.GetButton("Fire1"))
         {
 
-            Boost();
+            rb.AddForce(transform.right * rocketForce);
             PlayEmission();
 
         }
@@ -31,6 +29,14 @@ public class PlayerController : Rocket
             PauseEmission();
 
         }
+
+    }
+
+    protected override void Death()
+    {
+
+        GameController.instance.levelController.playerDead = true;
+        base.Death();
 
     }
 

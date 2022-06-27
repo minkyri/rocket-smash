@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
+
 public static class Extensions
 {
     public static Vector2 ComputeTotalImpulse(Collision2D collision)
@@ -139,6 +142,89 @@ public static class Extensions
         agent.CalculatePath(targetPosition, path);
 
         return path.status == NavMeshPathStatus.PathPartial;
+
+    }
+
+    public static GameObject[] FindGameObjectsWithLayer(int layer)
+    {
+
+        GameObject[] goArray = GameObject.FindObjectsOfType<GameObject>();
+        List<GameObject> goList = new List<GameObject>();
+
+        for (var i = 0; i < goArray.Length; i++)
+        {
+            if (goArray[i].layer == layer)
+            {
+                goList.Add(goArray[i]);
+            }
+        }
+        if (goList.Count == 0)
+        {
+            return null;
+        }
+        return goList.ToArray();
+
+    }
+
+    public static IEnumerator Fade(RawImage img, float targetAlpha, float fadeDuration)
+    {
+
+        float timeElapsed = 0;
+
+        Color screenInitialColour = img.color;
+        Color screenTargetColour = new Color(img.color.r, img.color.g, img.color.b, targetAlpha);
+
+        while (timeElapsed < fadeDuration)
+        {
+
+            img.color = Color.Lerp(screenInitialColour, screenTargetColour, timeElapsed / fadeDuration);
+            timeElapsed += Time.unscaledDeltaTime;
+            yield return null;
+
+        }
+        img.color = screenTargetColour;
+
+    }
+
+    public static IEnumerator Fade(TextMeshPro img, float targetAlpha, float fadeDuration)
+    {
+
+        float timeElapsed = 0;
+
+        Color screenInitialColour = img.color;
+        Color screenTargetColour = new Color(img.color.r, img.color.g, img.color.b, targetAlpha);
+
+        while (timeElapsed < fadeDuration)
+        {
+
+            img.color = Color.Lerp(screenInitialColour, screenTargetColour, timeElapsed / fadeDuration);
+            timeElapsed += Time.unscaledDeltaTime;
+            yield return null;
+
+        }
+        img.color = screenTargetColour;
+
+    }
+
+    public static IEnumerator Fade(Button img, float targetAlpha, float fadeDuration)
+    {
+
+        ColorBlock colors = img.colors;
+
+        float timeElapsed = 0;
+
+        Color screenInitialColour = img.colors.normalColor;
+        Color screenTargetColour = new Color(img.colors.normalColor.r, img.colors.normalColor.g, img.colors.normalColor.b, targetAlpha);
+
+        while (timeElapsed < fadeDuration)
+        {
+
+            colors.normalColor = Color.Lerp(screenInitialColour, screenTargetColour, timeElapsed / fadeDuration);
+            timeElapsed += Time.unscaledDeltaTime;
+            yield return null;
+
+        }
+        colors.normalColor = screenTargetColour;
 
     }
 
