@@ -60,7 +60,7 @@ public class Explodable : MonoBehaviour
             if (frag.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
             {
 
-                rb.velocity = setVelocity/fragments.Count;
+                rb.velocity = setVelocity/fragments.Count * Random.Range(0.5f, 1.5f);
 
             }
 

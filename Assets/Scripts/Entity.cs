@@ -11,6 +11,9 @@ public class Entity : MonoBehaviour
     private float maxHealth;
 
     [SerializeField]
+    private bool explodeFragmentsOnly;
+
+    [SerializeField]
     private float explosionForce = 10;
 
     [SerializeField]
@@ -130,7 +133,18 @@ public class Entity : MonoBehaviour
             if (foundRb != null)
             {
 
-                Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+                if(explodeFragmentsOnly)
+                {
+
+                    if(foundRb.gameObject.TryGetComponent<Fragment>(out Fragment frag)) Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+
+                }
+                else
+                {
+
+                    Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+
+                }
 
             }
 
