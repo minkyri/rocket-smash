@@ -50,6 +50,24 @@ public class Explodable : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void SetFragmentVelocity(Vector2 setVelocity)
+    {
+
+        foreach(GameObject frag in fragments)
+        {
+
+            if (frag.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+            {
+
+                rb.velocity = setVelocity/fragments.Count;
+
+            }
+
+        }    
+
+    }
+
     /// <summary>
     /// Creates fragments and then disables them
     /// </summary>

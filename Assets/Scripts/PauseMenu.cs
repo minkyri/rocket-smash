@@ -83,6 +83,14 @@ public class PauseMenu : MonoBehaviour
         pauseLock = true;
         float timeElapsed = 0;
 
+        //foreach (TextMeshProUGUI txt in texts)
+        //{
+
+        //    GameController.instance.levelController.level.TryGetComponent<LevelSettings>(out LevelSettings settings);
+        //    if(settings != null)txt.color = settings.themeColor;
+
+        //}
+
         Color buttonInitialColour = buttons[0].colors.normalColor;
         Color buttonTargetColour;
 
@@ -203,6 +211,7 @@ public class PauseMenu : MonoBehaviour
 
         restartFadeScreen.gameObject.SetActive(true);
         yield return StartCoroutine(Fade(true));
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }

@@ -165,6 +165,23 @@ public class LevelController : MonoBehaviour
                     sc.fragmentInEditor();
 
                 }
+                //else
+                //{
+
+                //    Explodable[] explodableArray = child.GetComponentsInChildren<Explodable>();
+                //    if(explodableArray.Length > 0)
+                //    {
+
+                //        foreach(Explodable explodable in explodableArray)
+                //        {
+
+                //            explodable.fragmentInEditor();
+
+                //        }
+
+                //    }
+
+                //}
 
             }
 

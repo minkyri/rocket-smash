@@ -52,4 +52,11 @@ public class Fragment : MonoBehaviour
 
     }
 
+    public void SetVelocity(Vector2 velocity)
+    {
+
+        rb.velocity = velocity;
+
+    }
+
 }
