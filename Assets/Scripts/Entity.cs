@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour
     private bool dealExplosionDamage = false;
 
     [SerializeField]
-    private float maxExplosionDamage = 1f;
+    private float explosionDamage = 100f;
 
     [SerializeField]
     private bool explodeFragmentsOnly;
@@ -178,9 +178,17 @@ public class Entity : MonoBehaviour
                 else
                 {
 
-                    RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, foundRb.position - (Vector2)transform.position, Vector2.Distance(transform.position, foundRb.position));
+                    RaycastHit2D[] raycastHit2Ds = Physics2D.RaycastAll(transform.position, foundRb.position - (Vector2)transform.position, Vector2.Distance(transform.position, foundRb.position));
 
-                    if(raycastHit2D.collider != null && raycastHit2D.collider.gameObject.tag != "Obstacle")
+                    bool hitWall = false;
+                    foreach(RaycastHit2D hit in raycastHit2Ds)
+                    {
+
+                        if (hit.collider.gameObject.tag == "Wall") hitWall = true;
+
+                    }
+
+                    if(!hitWall)
                     {
 
                         Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
@@ -189,7 +197,7 @@ public class Entity : MonoBehaviour
                         if (dealExplosionDamage && foundRb.gameObject.TryGetComponent<Entity>(out Entity ent) && dist < explosionRadius)
                         {
 
-                            ent.TakeDamage(maxExplosionDamage * (dist / explosionRadius));
+                            ent.TakeDamage(explosionDamage / (2 * Mathf.PI * Mathf.Clamp(Vector2.Distance(transform.position, foundRb.position), 0.001f, explosionRadius)));
 
                         }
 

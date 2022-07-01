@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2602852440608683123}
   - component: {fileID: 4621428685671856528}
   - component: {fileID: 5484452454824264292}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Wooden Crate
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 520b3bed20be04a45b1645b7e66d386a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62d2e62531a95e440ba3e31adc0f7422, type: 3}
   m_Color: {r: 0.681, g: 0.48623747, b: 0.27308097, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   dealExplosionDamage: 0
-  maxExplosionDamage: 1
+  explosionDamage: 100
   explodeFragmentsOnly: 1
   explosionForce: 4
   explosionRadius: 1
@@ -163,7 +163,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.001996, y: 1.001996}
+    oldSize: {x: 5, y: 5}
     newSize: {x: 5.01, y: 5.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

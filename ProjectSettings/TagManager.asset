@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - HealthBar
   - Level
+  - Wall
   layers:
   - Default
   - TransparentFX

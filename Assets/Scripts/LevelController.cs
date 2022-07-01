@@ -147,7 +147,23 @@ public class LevelController : MonoBehaviour
 
         if (checkEnemyCount != null) StopCoroutine(checkEnemyCount);
 
-        yield return new WaitForSeconds(messageDuration);
+        //yield return new WaitForSeconds(messageDuration);
+
+        float timeElapsed = 0;
+        while(timeElapsed < messageDuration)
+        {
+
+            timeElapsed += Time.deltaTime;
+            if (Input.anyKey)
+            {
+
+                timeElapsed = messageDuration;
+
+            }
+
+            yield return null;
+
+        }
 
         if (levelCount > levelPrefabs.Length - 1 || levelPrefabs.Length == 0) yield break; //completed all levels
 

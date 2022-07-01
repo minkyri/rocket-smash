@@ -91,9 +91,7 @@ public class LevelSettings : MonoBehaviour
             if(
                 
                 rend != null &&
-                tr.gameObject.tag != "Player" &&
-                tr.gameObject.tag != "Enemy" &&
-                tr.gameObject.tag != "Obstacle"
+                tr.gameObject.tag == "Wall"
                 
             )rend.color = wallColour;
 

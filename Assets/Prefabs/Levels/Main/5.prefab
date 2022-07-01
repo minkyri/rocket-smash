@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 520b3bed20be04a45b1645b7e66d386a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62d2e62531a95e440ba3e31adc0f7422, type: 3}
   m_Color: {r: 1, g: 0.3, b: 0.3, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   dealExplosionDamage: 1
-  maxExplosionDamage: 20
+  explosionDamage: 100
   explodeFragmentsOnly: 0
   explosionForce: 200
   explosionRadius: 5
@@ -4955,7 +4955,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.001996, y: 1.001996}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 5.02, y: 5.02}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4978,7 +4978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 1
+  explosionSpeed: 2
   entity: {fileID: 6315186429690563281}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1 &7058834753656215399
