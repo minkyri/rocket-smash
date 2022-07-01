@@ -29,7 +29,7 @@ public class Rocket : Entity
         
         base.Start();
         em.enabled = true;
-        mainModule.startSize = new ParticleSystem.MinMaxCurve((0.1f / 0.35f) * transform.localScale.y, (0.3f / 0.35f) * transform.localScale.y);
+        mainModule.startSize = new ParticleSystem.MinMaxCurve(Mathf.Sqrt(0.10714f * transform.localScale.y * transform.localScale.x), Mathf.Sqrt(0.42857f * transform.localScale.y * transform.localScale.x));
 
     }
 

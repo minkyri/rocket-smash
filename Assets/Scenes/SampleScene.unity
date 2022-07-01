@@ -1029,7 +1029,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 983
+    m_Bits: 3031
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1880,13 +1880,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surface2d: {fileID: 1344023636}
-  generateLevels: 1
+  generationType: 1
   levelPrefabs:
   - {fileID: 7058834753656215399, guid: 5ea949fd356a9b74dbde92b378cea652, type: 3}
-  - {fileID: 7058834753656215399, guid: 095a76d114a5dfd419ccbf7ade1a8c20, type: 3}
-  - {fileID: 7058834753656215399, guid: 1c98cb5dc974fd4458ec5e0b01f260a3, type: 3}
-  - {fileID: 7058834753656215399, guid: 9a794d8c365d7a9458e573f37b50eae6, type: 3}
-  - {fileID: 3298379583220359401, guid: e42aee5e010a49146a12f4c7854ed27c, type: 3}
+  - {fileID: 7058834753656215399, guid: 43ff348897d31b345bf352ba98503909, type: 3}
+  - {fileID: 7058834753656215399, guid: e9aa4bc4bdb09124ea00a6fd3861389e, type: 3}
+  - {fileID: 7058834753656215399, guid: 5b2aaa34896b9804e866230f6077090a, type: 3}
+  - {fileID: 7058834753656215399, guid: 244f63ba69d8815408c9937d66275475, type: 3}
+  - {fileID: 7058834753656215399, guid: c111088cf205840409bccf762267ab36, type: 3}
   fadeDuration: 0.5
   messageDuration: 3
   timeBeforeLevelExit: 1
@@ -2297,7 +2298,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.2.5
+  m_text: v0.2.6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 89aa78797277b3f48a3916c3ee0fcee6, type: 2}
   m_sharedMaterial: {fileID: 4134590466121641169, guid: 89aa78797277b3f48a3916c3ee0fcee6, type: 2}

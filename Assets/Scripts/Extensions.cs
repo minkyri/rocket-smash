@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
-
 public static class Extensions
 {
     public static Vector2 ComputeTotalImpulse(Collision2D collision)
@@ -165,7 +164,26 @@ public static class Extensions
         return goList.ToArray();
 
     }
+    public static Texture2D duplicateTexture(Texture2D source)
+    {
+        RenderTexture renderTex = RenderTexture.GetTemporary(
+                    source.width,
+                    source.height,
+                    0,
+                    RenderTextureFormat.Default,
+                    RenderTextureReadWrite.Linear);
 
+        Graphics.Blit(source, renderTex);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = renderTex;
+        Texture2D readableText = new Texture2D(source.width, source.height);
+        readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+        readableText.Apply();
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(renderTex);
+        return readableText;
+    }
+    
     public static IEnumerator Fade(RawImage img, float targetAlpha, float fadeDuration)
     {
 
@@ -185,7 +203,6 @@ public static class Extensions
         img.color = screenTargetColour;
 
     }
-
     public static IEnumerator Fade(TextMeshPro img, float targetAlpha, float fadeDuration)
     {
 

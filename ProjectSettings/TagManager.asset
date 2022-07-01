@@ -21,10 +21,10 @@ TagManager:
   - UI
   - Glow
   - Units
-  - Particles
+  - Fragments
   - Unwalkable
   - PauseUI
-  - 
+  - Particles
   - 
   - 
   - 
@@ -46,6 +46,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Floor
+    uniqueID: 402329505
+    locked: 0
+  - name: Particles
+    uniqueID: 3630153509
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

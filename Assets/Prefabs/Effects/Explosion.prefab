@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8675472967700283855}
   - component: {fileID: 1246432161802639757}
   - component: {fileID: 6081516448002563163}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,8 +70,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1765669047
-  m_SortingLayer: 0
+  m_SortingLayerID: -664813787
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -3913,7 +3913,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3703
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5

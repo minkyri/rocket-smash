@@ -7,7 +7,7 @@ public class Fragment : MonoBehaviour
 
     private Rigidbody2D rb;
     private MeshRenderer mr;
-    private float timeToFade = 5;
+    private float timeToFade = 5f;
     private float timer;
 
     private void Awake()
@@ -49,13 +49,6 @@ public class Fragment : MonoBehaviour
             mr.material.color = new Color(mr.material.color.r, mr.material.color.g, mr.material.color.b, timer/timeToFade);
 
         }
-
-    }
-
-    public void SetVelocity(Vector2 velocity)
-    {
-
-        rb.velocity = velocity;
 
     }
 

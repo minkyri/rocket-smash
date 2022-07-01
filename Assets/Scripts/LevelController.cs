@@ -11,8 +11,17 @@ public class LevelController : MonoBehaviour
 
     public NavMeshSurface surface2d;
 
+    private enum generationTypes
+    {
+
+        None,
+        Preset,
+        Random
+
+    };
+
     [SerializeField]
-    private bool generateLevels = true;
+    private generationTypes generationType = generationTypes.None;
 
     [SerializeField] private GameObject[] levelPrefabs;
     [SerializeField] private float fadeDuration;
@@ -36,7 +45,7 @@ public class LevelController : MonoBehaviour
     private void Start()
     {
 
-        if (generateLevels)
+        if (generationType.Equals(generationTypes.Preset))
         {
 
             canProgressToNextLevel = false;
@@ -62,7 +71,7 @@ public class LevelController : MonoBehaviour
             StartCoroutine(GenerateLevel());
 
         }
-        else
+        else if(generationType.Equals(generationTypes.None))
         {
 
             fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, 0);
@@ -72,6 +81,35 @@ public class LevelController : MonoBehaviour
             //level = Instantiate(levelPrefabs[0], Vector3.zero, Quaternion.identity, transform);
             Fragment();
             surface2d.BuildNavMesh();
+
+        }
+        else if(generationType.Equals(generationTypes.Random))
+        {
+
+            canProgressToNextLevel = false;
+            levelCount = 0;
+
+            if (transform.childCount > 0)
+            {
+
+                foreach (Transform tr in transform)
+                {
+
+                    Destroy(tr.gameObject);
+
+                }
+
+            }
+
+            SetMessageSettings();
+
+            HideHUD(true);
+            originalBackgroundColour = Camera.main.backgroundColor;
+            Camera.main.backgroundColor = fadeScreen.color;
+
+            //
+
+            StartCoroutine(GenerateLevel());
 
         }
 
@@ -100,6 +138,8 @@ public class LevelController : MonoBehaviour
             yield return StartCoroutine(Fade(true));
 
         }
+
+        playerDead = false;
 
         fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, 1);
         stageText.color = new Color(stageText.color.r, stageText.color.g, stageText.color.b, 1);
@@ -162,6 +202,8 @@ public class LevelController : MonoBehaviour
                 if (child.TryGetComponent<Explodable>(out Explodable sc))
                 {
 
+                    //sc.extraPoints = Mathf.RoundToInt(Mathf.Pow(25 * child.transform.localScale.x * child.transform.localScale.y, 2));
+                    sc.extraPoints = Mathf.RoundToInt(5 * child.transform.localScale.x * child.transform.localScale.y);
                     sc.fragmentInEditor();
 
                 }

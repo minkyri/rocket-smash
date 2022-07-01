@@ -11,6 +11,12 @@ public class Entity : MonoBehaviour
     private float maxHealth;
 
     [SerializeField]
+    private bool dealExplosionDamage = false;
+
+    [SerializeField]
+    private float maxExplosionDamage = 1f;
+
+    [SerializeField]
     private bool explodeFragmentsOnly;
 
     [SerializeField]
@@ -27,6 +33,7 @@ public class Entity : MonoBehaviour
     private Rigidbody2D lastCollisionRb;
     private Vector2 lastCollisionRbVelocity;
     private Vector2 lastFrameVelocity;
+    private bool deathWasCollision = false;
 
     protected Explodable explodable;
     protected Rigidbody2D rb;
@@ -53,7 +60,8 @@ public class Entity : MonoBehaviour
 
             !collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D colRb) ||
             collision.gameObject.layer == 8 ||
-            (gameObject.tag == "Enemy" && collision.gameObject.tag == "Enemy")
+            (gameObject.tag == "Enemy" && collision.gameObject.tag == "Enemy") ||
+            (gameObject.tag == "Player" && collision.gameObject.tag == "Obstacle")
 
         ) return;
 
@@ -96,6 +104,13 @@ public class Entity : MonoBehaviour
 
             float damage = Mathf.Max(0f, otherApproach - myApproach - minimumDamageThreshold);
 
+            if((health - damage) < 0)
+            {
+
+                deathWasCollision = true;
+
+            }
+
             TakeDamage(damage);
 
         }
@@ -105,9 +120,22 @@ public class Entity : MonoBehaviour
     protected virtual void Death()
     {
 
-        Vector2 collisionVelocity = ((lastCollisionRb.mass * lastCollisionRbVelocity) - (rb.mass * lastFrameVelocity)) / rb.mass;
         explodable.explode();
-        explodable.SetFragmentVelocity(collisionVelocity);
+
+        if (deathWasCollision)
+        {
+
+            Vector2 collisionVelocity = ((lastCollisionRb.mass * lastCollisionRbVelocity) - (rb.mass * lastFrameVelocity)) / rb.mass;
+            explodable.SetFragmentVelocity(collisionVelocity);
+
+        }
+        else
+        {
+
+            explodable.SetFragmentVelocity(rb.velocity);
+
+        }
+        
 
         if (explosionPrefab != null)
         {
@@ -117,13 +145,21 @@ public class Entity : MonoBehaviour
             ParticleSystem.EmissionModule em = ps.emission;
             ParticleSystem.MainModule mm = ps.main;
             mm.startSpeed = new ParticleSystem.MinMaxCurve(explosionForce / 4, explosionForce / 2);
-            mm.startSize = new ParticleSystem.MinMaxCurve((0.08f / 0.21f) * transform.localScale.y * transform.localScale.x, (0.2f / 0.21f) * transform.localScale.y * transform.localScale.x);
-            ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 0.5f, explosionForce * 0.8f);
+            mm.startSize = new ParticleSystem.MinMaxCurve(Mathf.Sqrt(0.10714f * transform.localScale.y * transform.localScale.x), Mathf.Sqrt(0.42857f * transform.localScale.y * transform.localScale.x));
+            ParticleSystem.MinMaxCurve count = new ParticleSystem.MinMaxCurve(explosionForce * 0.4f, explosionForce * 0.6f);
             ParticleSystem.Burst burst = new ParticleSystem.Burst(0, count);
             em.SetBurst(0, burst);
             ps.Play();
 
         }
+
+        CreateExplosionForce();
+        Destroy(gameObject);
+
+    }
+
+    protected virtual void CreateExplosionForce()
+    {
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D col in colliders)
@@ -133,16 +169,31 @@ public class Entity : MonoBehaviour
             if (foundRb != null)
             {
 
-                if(explodeFragmentsOnly)
+                if (explodeFragmentsOnly)
                 {
 
-                    if(foundRb.gameObject.TryGetComponent<Fragment>(out Fragment frag)) Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+                    if (foundRb.gameObject.TryGetComponent<Fragment>(out Fragment frag)) Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
 
                 }
                 else
                 {
 
-                    Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+                    RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, foundRb.position - (Vector2)transform.position, Vector2.Distance(transform.position, foundRb.position));
+
+                    if(raycastHit2D.collider != null && raycastHit2D.collider.gameObject.tag != "Obstacle")
+                    {
+
+                        Extensions.AddExplosionForce(foundRb, explosionForce, transform.position, explosionRadius);
+                        float dist = Vector2.Distance(foundRb.position, transform.position);
+
+                        if (dealExplosionDamage && foundRb.gameObject.TryGetComponent<Entity>(out Entity ent) && dist < explosionRadius)
+                        {
+
+                            ent.TakeDamage(maxExplosionDamage * (dist / explosionRadius));
+
+                        }
+
+                    }
 
                 }
 
@@ -150,11 +201,9 @@ public class Entity : MonoBehaviour
 
         }
 
-        Destroy(gameObject);
-
     }
 
-    protected void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
 
         health -= damage;

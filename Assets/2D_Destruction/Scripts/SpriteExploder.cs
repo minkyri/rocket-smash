@@ -198,7 +198,6 @@ public static class SpriteExploder {
             points.Add(new Vector2(Random.Range(rect.width / -2, rect.width / 2), Random.Range(rect.height / -2, rect.height / 2)));
         }
 
-
         Voronoi voronoi = new Delaunay.Voronoi(points, null, rect);
         List<List<Vector2>> clippedRegions = new List<List<Vector2>>();
         foreach (List<Vector2> region in voronoi.Regions())
