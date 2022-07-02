@@ -12,6 +12,7 @@ public class LevelController : MonoBehaviour
     public NavMeshSurface surface2d;
 
     [SerializeField] private bool generateLevels = true;
+    [SerializeField] private int lives = 3;
     [SerializeField] private GameObject[] levelPrefabs;
     [SerializeField] private float fadeDuration;
     [SerializeField] private float messageDuration;
@@ -21,6 +22,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private RawImage fadeScreen;
     [SerializeField] private TextMeshProUGUI stageText;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI livesText;
     [HideInInspector] public GameObject level;
     [HideInInspector] public bool isTransitioning = true;
     [HideInInspector] public bool playerDead = false;
@@ -104,6 +106,8 @@ public class LevelController : MonoBehaviour
         fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, 1);
         stageText.color = new Color(stageText.color.r, stageText.color.g, stageText.color.b, 1);
         descriptionText.color = new Color(descriptionText.color.r, descriptionText.color.g, descriptionText.color.b, 1);
+
+        livesText.text = "X" + lives.ToString();
 
         if (checkEnemyCount != null) StopCoroutine(checkEnemyCount);
 
@@ -213,8 +217,24 @@ public class LevelController : MonoBehaviour
         if (canProgressToNextLevel)
         {
 
-            if(!playerDead) StartCoroutine(GenerateLevel());
-            else StartCoroutine(GameOverScreen());   
+            if (!playerDead)
+            {
+
+                StartCoroutine(GenerateLevel());
+
+            }
+            else if (playerDead && lives > 0)
+            {
+
+                StartCoroutine(PlayerDeadDoubleMessage());
+
+            }
+            else
+            {
+
+                StartCoroutine(GameOverScreen());
+
+            }
             canProgressToNextLevel = false;
 
         }
@@ -310,6 +330,38 @@ public class LevelController : MonoBehaviour
 
     }
 
+    private IEnumerator PlayerDeadDoubleMessage()
+    {
+
+        yield return StartCoroutine(Fade(true));
+        float timeElapsed = 0;
+        while (timeElapsed < messageDuration)
+        {
+
+            timeElapsed += Time.deltaTime;
+            if (Input.anyKey)
+            {
+
+                timeElapsed = messageDuration;
+
+            }
+
+            yield return null;
+
+        }
+        HideHUD(true);
+        Camera.main.backgroundColor = fadeScreen.color;
+        yield return StartCoroutine(Fade(false));
+
+        playerDead = false;
+        levelCount -= 1;
+
+        SetMessageSettings();
+        yield return StartCoroutine(Fade(true));
+        StartCoroutine(GenerateLevel());
+
+    }
+
     private void DestroyPreviousLevel()
     {
 
@@ -381,12 +433,28 @@ public class LevelController : MonoBehaviour
         if (playerDead)
         {
 
-            set = Color.HSVToRGB(0f, 0.7f, 1f);
-            set = new Color(set.r, set.g, set.b, 0f);
-            stageText.color = set;
-            descriptionText.text = "Press any button to restart.";
-            stageText.text = "you died";
-            return;
+            if (lives > 0)
+            {
+
+                set = Color.HSVToRGB(0f, 0.7f, 1f);
+                set = new Color(set.r, set.g, set.b, 0f);
+                stageText.color = set;
+                descriptionText.text = "You have " + lives.ToString() + " lives left.";
+                stageText.text = "you died";
+                return;
+
+            }
+            else
+            {
+
+                set = Color.HSVToRGB(0f, 0.7f, 1f);
+                set = new Color(set.r, set.g, set.b, 0f);
+                stageText.color = set;
+                descriptionText.text = "Press any button to restart.";
+                stageText.text = "game over";
+                return;
+
+            }
 
         }
         else if (levelCount > levelPrefabs.Length - 1)
@@ -435,6 +503,14 @@ public class LevelController : MonoBehaviour
                 settings.verticalSize
             
         );
+
+    }
+
+    public void SetPlayerDead()
+    {
+
+        playerDead = true;
+        lives -= 1;
 
     }
 

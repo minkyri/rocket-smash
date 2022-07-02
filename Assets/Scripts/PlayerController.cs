@@ -35,7 +35,7 @@ public class PlayerController : Rocket
     protected override void Death()
     {
 
-        GameController.instance.levelController.playerDead = true;
+        GameController.instance.levelController.SetPlayerDead();
         base.Death();
 
     }
