@@ -11,18 +11,7 @@ public class LevelController : MonoBehaviour
 
     public NavMeshSurface surface2d;
 
-    private enum generationTypes
-    {
-
-        None,
-        Preset,
-        Random
-
-    };
-
-    [SerializeField]
-    private generationTypes generationType = generationTypes.None;
-
+    [SerializeField] private bool generateLevels = true;
     [SerializeField] private GameObject[] levelPrefabs;
     [SerializeField] private float fadeDuration;
     [SerializeField] private float messageDuration;
@@ -45,7 +34,7 @@ public class LevelController : MonoBehaviour
     private void Start()
     {
 
-        if (generationType.Equals(generationTypes.Preset))
+        if (generateLevels)
         {
 
             canProgressToNextLevel = false;
@@ -71,7 +60,7 @@ public class LevelController : MonoBehaviour
             StartCoroutine(GenerateLevel());
 
         }
-        else if(generationType.Equals(generationTypes.None))
+        else
         {
 
             fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b, 0);
@@ -81,35 +70,6 @@ public class LevelController : MonoBehaviour
             //level = Instantiate(levelPrefabs[0], Vector3.zero, Quaternion.identity, transform);
             Fragment();
             surface2d.BuildNavMesh();
-
-        }
-        else if(generationType.Equals(generationTypes.Random))
-        {
-
-            canProgressToNextLevel = false;
-            levelCount = 0;
-
-            if (transform.childCount > 0)
-            {
-
-                foreach (Transform tr in transform)
-                {
-
-                    Destroy(tr.gameObject);
-
-                }
-
-            }
-
-            SetMessageSettings();
-
-            HideHUD(true);
-            originalBackgroundColour = Camera.main.backgroundColor;
-            Camera.main.backgroundColor = fadeScreen.color;
-
-            //
-
-            StartCoroutine(GenerateLevel());
 
         }
 

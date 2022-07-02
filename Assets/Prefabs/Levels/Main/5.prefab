@@ -4978,7 +4978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 2
+  explosionSpeed: 4
   entity: {fileID: 6315186429690563281}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1 &7058834753656215399

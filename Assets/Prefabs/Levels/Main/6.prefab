@@ -9941,7 +9941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 2
+  explosionSpeed: 4
   entity: {fileID: 8346803412762833396}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1 &1999819148558980956
@@ -19885,7 +19885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 2
+  explosionSpeed: 4
   entity: {fileID: 1709110829428763784}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1 &2717918360189417731
@@ -49765,7 +49765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 2
+  explosionSpeed: 4
   entity: {fileID: 611087783765221775}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1 &7947584410784220729
@@ -54746,7 +54746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   igniteHealthThreshold: 10
   flameAmount: 1
-  explosionSpeed: 2
+  explosionSpeed: 4
   entity: {fileID: 2253652886233040837}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!1001 &1808881921197957793
