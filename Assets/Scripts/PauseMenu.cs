@@ -212,7 +212,17 @@ public class PauseMenu : MonoBehaviour
         restartFadeScreen.gameObject.SetActive(true);
         yield return StartCoroutine(Fade(true));
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+
+    }
+
+    public IEnumerator IEMainMenu()
+    {
+
+        restartFadeScreen.gameObject.SetActive(true);
+        yield return StartCoroutine(Fade(true));
+        Time.timeScale = 1f;
+        SceneManager.LoadSceneAsync(0);
 
     }
 
@@ -221,6 +231,14 @@ public class PauseMenu : MonoBehaviour
 
         if (pauseLock) return;
         StartCoroutine(IERestart());
+
+    }
+
+    public void MainMenu()
+    {
+
+        if (pauseLock) return;
+        StartCoroutine(IEMainMenu());
 
     }
 

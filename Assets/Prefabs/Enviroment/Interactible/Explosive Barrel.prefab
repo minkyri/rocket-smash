@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  autoExplosionStats: 0
   dealExplosionDamage: 1
   explosionDamage: 200
   explodeFragmentsOnly: 0
@@ -162,7 +163,6 @@ MonoBehaviour:
   igniteHealthThreshold: 3
   flameAmount: 1
   explosionSpeed: 2
-  entity: {fileID: 2487825612185599963}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}
 --- !u!61 &7196067905736980347
 BoxCollider2D:

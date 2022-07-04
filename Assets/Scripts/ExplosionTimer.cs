@@ -12,24 +12,25 @@ public class ExplosionTimer : MonoBehaviour
     private float flameAmount = 1f;
 
     [SerializeField]
-    private float explosionSpeed = 1f;
-
-    [SerializeField]
-    private Entity entity;
+    private float explosionSpeed = 2f;
 
     [SerializeField]
     private GameObject flame;
 
-    private bool startedExplosion = false;
-    private bool startedFlashing = false;
+    private bool startedExplosion;
+    private bool startedFlashing;
     private ParticleSystem.EmissionModule flameEmissionModule;
     private ParticleSystem.MainModule flameMainModule;
+    private Color startingColour;
     private SpriteRenderer rend;
+    private Entity entity;
 
     private void Awake()
     {
 
         rend = GetComponent<SpriteRenderer>();
+        entity = GetComponent<Entity>();
+        startingColour = rend.color;
 
     }
 
@@ -45,6 +46,9 @@ public class ExplosionTimer : MonoBehaviour
         flameSystem.transform.localScale = entity.transform.localScale;
         flameMainModule.startSize = new ParticleSystem.MinMaxCurve(Mathf.Sqrt(0.10714f * transform.localScale.y * transform.localScale.x), Mathf.Sqrt(0.42857f * transform.localScale.y * transform.localScale.x));
 
+        startedExplosion = false;
+        startedFlashing = false;
+
     }
 
     private void Update()
@@ -53,7 +57,7 @@ public class ExplosionTimer : MonoBehaviour
         if (!startedExplosion && !startedFlashing)
         {
 
-            if (entity.GetMaxHealth() - entity.GetHealth() > igniteHealthThreshold)
+            if (entity.GetMaxHealth() - entity.GetHealth() >= igniteHealthThreshold)
             {
 
                 startedExplosion = true;
@@ -141,6 +145,20 @@ public class ExplosionTimer : MonoBehaviour
             yield return null;
 
         }
+
+    }
+
+    public void Ignite()
+    {
+
+        igniteHealthThreshold = -1f;
+
+    }
+
+    public void SetExplosionSpeed(float setSpeed)
+    {
+
+        explosionSpeed = setSpeed;
 
     }
 

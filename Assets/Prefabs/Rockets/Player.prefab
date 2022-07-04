@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  autoExplosionStats: 1
   dealExplosionDamage: 0
   explosionDamage: 100
   explodeFragmentsOnly: 0
@@ -4951,7 +4952,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 5.02, y: 5.02}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

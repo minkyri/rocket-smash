@@ -160,7 +160,7 @@ public class LevelController : MonoBehaviour
         }
 
         yield return StartCoroutine(Fade(false));
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         yield break;
 
     }
@@ -182,28 +182,40 @@ public class LevelController : MonoBehaviour
                 if (child.TryGetComponent<Explodable>(out Explodable sc))
                 {
 
-                    //sc.extraPoints = Mathf.RoundToInt(Mathf.Pow(25 * child.transform.localScale.x * child.transform.localScale.y, 2));
                     sc.extraPoints = Mathf.RoundToInt(5 * child.transform.localScale.x * child.transform.localScale.y);
                     sc.fragmentInEditor();
 
                 }
-                //else
-                //{
+                if(child.transform.childCount > 0)
+                {
 
-                //    Explodable[] explodableArray = child.GetComponentsInChildren<Explodable>();
-                //    if(explodableArray.Length > 0)
-                //    {
+                    FragmentChildren(child);
 
-                //        foreach(Explodable explodable in explodableArray)
-                //        {
+                }
 
-                //            explodable.fragmentInEditor();
+            }
 
-                //        }
+        }
 
-                //    }
+    }
 
-                //}
+    public static void FragmentChildren(GameObject obj)
+    {
+
+        foreach (Transform tr in obj.transform)
+        {
+
+            if (tr.gameObject.TryGetComponent<Explodable>(out Explodable sc))
+            {
+
+                sc.extraPoints = Mathf.RoundToInt(5 * obj.transform.localScale.x * obj.transform.localScale.y);
+                sc.fragmentInEditor();
+
+            }
+            if (tr.childCount > 0)
+            {
+
+                FragmentChildren(tr.gameObject);
 
             }
 
@@ -367,13 +379,23 @@ public class LevelController : MonoBehaviour
 
         Destroy(level);
 
-        GameObject[] particles = Extensions.FindGameObjectsWithLayer(8);
+        GameObject[] particles = Extensions.FindGameObjectsWithLayer(11);
         if (particles == null || particles.Length == 0) return;
 
         foreach (GameObject p in particles)
         {
 
             Destroy(p);
+
+        }
+
+        GameObject[] fragments = Extensions.FindGameObjectsWithLayer(8);
+        if (fragments == null || fragments.Length == 0) return;
+
+        foreach (GameObject f in fragments)
+        {
+
+            Destroy(f);
 
         }
 

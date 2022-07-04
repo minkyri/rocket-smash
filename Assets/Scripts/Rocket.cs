@@ -7,13 +7,15 @@ public class Rocket : Entity
 {
 
     [SerializeField]
-    protected float rocketForce = 3;
+    protected float rocketForce = 2f;
 
     [SerializeField]
-    protected float rotateSpeed = 20f;
+    protected float rotateSpeed = 10f;
 
     private ParticleSystem.EmissionModule em;
-    private ParticleSystem.MainModule mainModule;   
+    private ParticleSystem.MainModule mainModule;
+
+    private bool particlePlaying = false;
 
     protected override void Awake()
     {
@@ -33,15 +35,29 @@ public class Rocket : Entity
 
     }
 
+    protected virtual void Update()
+    {
+
+        if (particlePlaying)
+        {
+
+            em.rateOverDistance = rocketForce * 3;
+
+        }
+
+    }
+
     protected void PlayEmission()
     {
 
+        particlePlaying = true;
         em.rateOverDistance = rocketForce * 2;
 
     }
     protected void PauseEmission()
     {
 
+        particlePlaying = false;
         em.rateOverDistance = 0;
 
     }

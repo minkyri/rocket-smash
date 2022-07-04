@@ -109,6 +109,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -5073,6 +5074,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 3
   rotateSpeed: 6
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 4
   wanderTimer: 1
@@ -10053,6 +10055,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -15017,6 +15020,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 3
   rotateSpeed: 6
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 4
   wanderTimer: 1
@@ -19997,6 +20001,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -24951,7 +24956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2adf3ed6529117e4bb353da21dec252f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
   dealExplosionDamage: 0
   explosionDamage: 100
   explodeFragmentsOnly: 0
@@ -24960,6 +24965,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 10
   rotateSpeed: 4
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 5
   wanderTimer: 3
@@ -29923,6 +29929,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -34886,6 +34893,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -39849,6 +39857,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 2
   rotateSpeed: 10
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 2
   wanderTimer: 0.5
@@ -44897,6 +44906,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 3
   rotateSpeed: 6
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 4
   wanderTimer: 1
@@ -49878,6 +49888,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
   rocketForce: 3
   rotateSpeed: 6
+  targetTag: Player
   awareRadius: 10
   wanderRadius: 4
   wanderTimer: 1

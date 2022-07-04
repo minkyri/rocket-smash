@@ -7,8 +7,11 @@ public class Entity : MonoBehaviour
 {
 
     [SerializeField]
-    protected float health = 100;
+    public float health = 10;
     private float maxHealth;
+
+    [SerializeField]
+    private bool autoExplosionStats = false;
 
     [SerializeField]
     private bool dealExplosionDamage = false;
@@ -50,6 +53,22 @@ public class Entity : MonoBehaviour
     {
 
         maxHealth = health;
+
+        if (autoExplosionStats)
+        {
+
+            AutoSetExplosionStats();
+
+        }
+
+    }
+
+    public void AutoSetExplosionStats()
+    {
+
+        explosionForce = 47.62f * transform.localScale.y * transform.localScale.x;
+        explosionRadius = 9.524f * transform.localScale.y * transform.localScale.x;
+        explosionDamage = 200f * transform.localScale.y * transform.localScale.x;
 
     }
 
@@ -116,7 +135,6 @@ public class Entity : MonoBehaviour
         }
 
     }
-
     protected virtual void Death()
     {
 
