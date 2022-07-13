@@ -109,7 +109,7 @@ MonoBehaviour:
   explosionForce: 200
   explosionRadius: 5
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
-  rocketForce: 3
+  rocketForce: 4
   rotateSpeed: 7
   targetTag: Player
   awareRadius: 15
@@ -4981,5 +4981,4 @@ MonoBehaviour:
   igniteHealthThreshold: 10
   flameAmount: 1
   explosionSpeed: 4
-  entity: {fileID: 8306738108325186177}
   flame: {fileID: 2408545381440087487, guid: efddd528079563b4db79e5e9e3aeb65f, type: 3}

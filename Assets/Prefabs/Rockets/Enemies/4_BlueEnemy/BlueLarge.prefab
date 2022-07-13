@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3223f948f8fba8d489355223e03be836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 40
   autoExplosionStats: 1
   dealExplosionDamage: 0
   explosionDamage: 100

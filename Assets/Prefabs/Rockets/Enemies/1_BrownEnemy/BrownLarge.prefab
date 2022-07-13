@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 62d2e62531a95e440ba3e31adc0f7422, type: 3}
-  m_Color: {r: 0.6603774, g: 0.37563196, b: 0.19001423, a: 1}
+  m_Color: {r: 0.752, g: 0.46055096, b: 0.21485712, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   explosionForce: 10
   explosionRadius: 2
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
-  rocketForce: 2
+  rocketForce: 3.5
   rotateSpeed: 7
   targetTag: Player
   awareRadius: 20

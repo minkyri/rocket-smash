@@ -108,7 +108,7 @@ MonoBehaviour:
   explosionForce: 10
   explosionRadius: 2
   explosionPrefab: {fileID: 4944565263243620788, guid: 35f4cee90e595b44fbf6c4d1be074a2a, type: 3}
-  rocketForce: 3.5
+  rocketForce: 5
   rotateSpeed: 7
   targetTag: Player
   awareRadius: 13

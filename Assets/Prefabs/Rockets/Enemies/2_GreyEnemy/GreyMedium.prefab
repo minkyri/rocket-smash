@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2adf3ed6529117e4bb353da21dec252f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
+  health: 15
   autoExplosionStats: 1
   dealExplosionDamage: 0
   explosionDamage: 100
